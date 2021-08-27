@@ -1,0 +1,234 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>仅仅打开了1个页面，为什么会有4个进程？ | Isabella's Blog</title><meta name="keywords" content="HTTP"><meta name="author" content="Isabella"><meta name="copyright" content="Isabella"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="在chrome浏览器中，打开一个页面需要启动多少进程？点击chrome浏览器右上角的”选项” 菜单，选择”更多工具”子菜单，点击”任务管理器”，这将打开Chrome的任务管理器的窗口， 和Windows任务管理器一样，Chrome任务管理器也是用来展示运行中Chrome使用的进程信息。从图中可以看出，Chrome启动了4个进程，你也许会好奇，只是打开了一个页面，为什么需要启动这么多进程呢？ 在此之">
+<meta property="og:type" content="article">
+<meta property="og:title" content="仅仅打开了1个页面，为什么会有4个进程？">
+<meta property="og:url" content="http://guestljz.com/2021/03/29/HTM-HTTP-WEB/%E4%BB%85%E4%BB%85%E6%89%93%E5%BC%80%E4%BA%861%E4%B8%AA%E9%A1%B5%E9%9D%A2%EF%BC%8C%E4%B8%BA%E4%BB%80%E4%B9%88%E6%9C%894%E4%B8%AA%E8%BF%9B%E7%A8%8B%EF%BC%9F/index.html">
+<meta property="og:site_name" content="Isabella&#39;s Blog">
+<meta property="og:description" content="在chrome浏览器中，打开一个页面需要启动多少进程？点击chrome浏览器右上角的”选项” 菜单，选择”更多工具”子菜单，点击”任务管理器”，这将打开Chrome的任务管理器的窗口， 和Windows任务管理器一样，Chrome任务管理器也是用来展示运行中Chrome使用的进程信息。从图中可以看出，Chrome启动了4个进程，你也许会好奇，只是打开了一个页面，为什么需要启动这么多进程呢？ 在此之">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://z3.ax1x.com/2021/04/08/cJGuHx.jpg">
+<meta property="article:published_time" content="2021-03-29T03:09:11.000Z">
+<meta property="article:modified_time" content="2021-05-25T08:16:03.132Z">
+<meta property="article:author" content="Isabella">
+<meta property="article:tag" content="HTTP">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://z3.ax1x.com/2021/04/08/cJGuHx.jpg"><link rel="shortcut icon" href="/"><link rel="canonical" href="http://guestljz.com/2021/03/29/HTM-HTTP-WEB/%E4%BB%85%E4%BB%85%E6%89%93%E5%BC%80%E4%BA%861%E4%B8%AA%E9%A1%B5%E9%9D%A2%EF%BC%8C%E4%B8%BA%E4%BB%80%E4%B9%88%E6%9C%894%E4%B8%AA%E8%BF%9B%E7%A8%8B%EF%BC%9F/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="preconnect" href="//zz.bdstatic.com"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  ClickShowText: {"text":"富强,民主,文明,和谐,自由,平等,公正,法治,诚信,友善","fontSize":"15px"},
+  lightbox: 'mediumZoom',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1A1F23","position":"bottom-left"},
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: true,
+  isToc: true,
+  postUpdate: '2021-05-25 16:16:03'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+   if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+  const autoChangeMode = 'false'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }const asideStatus = saveToLocal.get('aside-status')
+if (asideStatus !== undefined) {
+   if (asideStatus === 'hide') {
+     document.documentElement.classList.add('hide-aside')
+   } else {
+     document.documentElement.classList.remove('hide-aside')
+   }
+}})()</script><link rel="stylesheet" href="/gitcalendar/css/gitcalendar.css"/><link rel="stylesheet" href="/css/clearbanner.css"><link rel="stylesheet" href="/css/autobanner.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/sviptzk/StaticFile_HEXO@latest/butterfly/css/plugins.min.css"><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Isabella's Blog" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" data-lazy-src="https://s3.ax1x.com/2020/12/18/rtAFGd.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">29</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">22</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 视频</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fa fa-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div id="body-wrap"><header class="no-top-img" id="page-header"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Isabella's Blog</a></span><span id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 视频</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fa fa-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">仅仅打开了1个页面，为什么会有4个进程？</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-03-29T03:09:11.000Z" title="发表于 2021-03-29 11:09:11">2021-03-29</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-05-25T08:16:03.132Z" title="更新于 2021-05-25 16:16:03">2021-05-25</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/HTTP/">HTTP</a></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div><article class="post-content" id="article-container"><p>在chrome浏览器中，打开一个页面需要启动多少进程？<br>点击chrome浏览器右上角的”选项” 菜单，选择”更多工具”子菜单，点击”任务管理器”，这将打开Chrome的任务管理器的窗口，</p>
+<p>和Windows任务管理器一样，Chrome任务管理器也是用来展示运行中Chrome使用的进程信息。从图中可以看出，Chrome启动了4个进程，你也许会好奇，只是打开了一个页面，为什么需要启动这么多进程呢？</p>
+<p>在此之前，我们需要了解一下进程的概念。</p>
+<h1 id="进程和线程"><a href="#进程和线程" class="headerlink" title="进程和线程"></a>进程和线程</h1><p>在了解并程和线程，先了解一下什么是并行处理</p>
+<h2 id="并行处理"><a href="#并行处理" class="headerlink" title="并行处理"></a>并行处理</h2><p>计算机中的并行处理就是同一时刻处理多个任务，比如我们要计算这三个表达式的值，并显示出结果</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">A = <span class="number">1</span> + <span class="number">2</span></span><br><span class="line">B = <span class="number">20</span> / <span class="number">5</span></span><br><span class="line">C = <span class="number">7</span> * <span class="number">8</span></span><br></pre></td></tr></table></figure>
+
+<p>在编写代码的时候，我们可以把这个过程拆分为四个任务</p>
+<ul>
+<li>任务1 是计算 A = 1 + 2</li>
+<li>任务2 是计算 B = 20 / 5</li>
+<li>任务3 是计算 C = 7 * 8</li>
+<li>任务4 是显示最后的计算结果</li>
+</ul>
+<p>正常情况下程序可以使用<code>单线程</code> 来处理，也就是按照顺序分别执行这四个任务</p>
+<p>如果采用多线程，那么我们只需分<code>两步走</code>： 第一步，使用三个线程同时执行前三个任务；第二步，再执行第4个显示任务</p>
+<p>通过对比分析，你会发现用单线程执行任务需要四步，而使用多线程只需要两步。因此，使用并行处理能大大提升性能。</p>
+<h2 id="线程-VS-进程"><a href="#线程-VS-进程" class="headerlink" title="线程 VS 进程"></a>线程 VS 进程</h2><p> 多线程可以并行处理任务，但是<code>线程是不能单独存在的，它是由进程来启动和管理的</code>，那么什么是进程呢？</p>
+<p> <code>一个进程就是一个程序的运行实例</code>。详细解释就是，启动一个程序的时候，操作系统就会为该程序创建一块内存，用来存放代码、运行中的数据和一个执行任务的主线程，我们把这样的一个运行环境叫<code>进程</code>。</p>
+<p>如下对比图：<br><img src= "/img/bgTop.jpg" data-lazy-src="https://z3.ax1x.com/2021/05/21/gHtOk8.png" alt="进程和线程对比图"></p>
+<p>从中可以看出，<code>线程是依附于进程的，而进程中使用多线程并行处理能提升运算效率。</code></p>
+<p>总的来说，进程和线程之间的关系有以下4个特点。</p>
+<ol>
+<li><p><code>进程中的任意一线程执行出错，都会导致整个进程的崩溃</code><br>我们可以模拟以下场景</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">A = <span class="number">1</span> + <span class="number">2</span></span><br><span class="line">B = <span class="number">20</span> / <span class="number">5</span></span><br><span class="line">C = <span class="number">7</span> * <span class="number">8</span></span><br></pre></td></tr></table></figure>
+<p>当我稍微对以上三个表达式做一点修改，在计算B的值的时候，我把表达式的分母改成0，当线程执行到 B = 20 / 0 时，由于分母为0，线程会执行出错，这样会导致整个进程奔溃，那么另外两个线程执行的结果也没有了。</p>
+</li>
+<li><p><code>线程之间共享进程中的数据</code><br>线程之间可以对进程的公共数据进行读写操作，从而进行数据通信，如下图<br><img src= "/img/bgTop.jpg" data-lazy-src="https://z3.ax1x.com/2021/05/21/gHtOk8.png" alt="gHtOk8.png"><br>从中可以看出，线程1，线程2，线程3分别把执行结果写入A/B/C中，然后线程2继续从A/B/C 中读取数据，用来显示执行结果。</p>
+</li>
+<li><p><code>当一个进程关闭之后，操作系统会回收进程所占用的内存</code><br>当一个进程退出时，操作系统会回收改进程所申请得所有资源；即使其中任意线程因为操作不当导致内存泄漏，当退出时，这些内存也会被正确回收。</p>
+</li>
+</ol>
+<p>比如之前的IE浏览器，支持很多插件，而这些插件很容易导致内存泄漏，这意味着只要浏览器开着，内存占用就有可能会越来越多，但是当关闭浏览器进程时，这些内存都会被系统回收掉。</p>
+<ol start="4">
+<li><code>进程之间的内容相互隔离</code><br>进程隔离是为了保存操作系统中进程互不干扰的技术，每个进程只能访问自己占有的数据，也就避免出现进程A写入数据到进程B的情况。正是因为进程只能的数据是严格隔离的，所以一个进程如果奔溃了，或者挂起了，是不会影响到其他进程的。如果进程之间需要进行数据的通信，这时候，就需要使用用于进行间通信的（IPC）的机制了。</li>
+</ol>
+<h1 id="单进程浏览器时代"><a href="#单进程浏览器时代" class="headerlink" title="单进程浏览器时代"></a>单进程浏览器时代</h1><p><code>单进程浏览器是指浏览器的所有功能模块都是运行在同一个进程里</code>，这些模块包含了网络、插件、JavaScript运行环境、渲染引擎和页面等。单进程浏览器的架构如下<br><img src= "/img/bgTop.jpg" data-lazy-src="https://z3.ax1x.com/2021/05/24/gvQ3ss.png" alt="gvQ3ss.png"><br>如此多的功能模块运行在一个进程里，是导致浏览器<code>不稳定</code>、<code>不安全</code>和<code>不流畅</code>的一个主要原因。出现这些问题的主要原因：</p>
+<h2 id="1、不稳定"><a href="#1、不稳定" class="headerlink" title="1、不稳定"></a>1、不稳定</h2><p>早期浏览器需要借助于<code>插件</code>来实现如Web视频、Web游戏等各种强大的功能，但是插件是最容易出现问题的模块，并且还运行在浏览器进程之中，所以一个插件的意外奔溃会引起整个浏览器的奔溃<br>除了插件之外，<code>渲染引擎模块</code>也是不稳定的 ，通常一些复杂的JavaScript代码有可能引起渲染引擎模块的奔溃。和插件一个渲染引擎的奔溃也会引起浏览器的奔溃。</p>
+<h2 id="2、不流畅"><a href="#2、不流畅" class="headerlink" title="2、不流畅"></a>2、不流畅</h2><p>从上面的“单进程浏览器架构示意图”可以看出，所有页面的渲染模块、JavaScript执行环境以及插件都是运行在同一个线程中的，这就意味这同一时刻只能有一个模块可以执行。<br>比如，写了一个无限循环的脚本</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">freeze</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(<span class="number">1</span>) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&quot;freeze&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">freeze()</span><br></pre></td></tr></table></figure>
+<p>如果让这个脚本运行在一个单进程浏览器的页面里，0.0。<br>因为这个脚本是无限循环的，所以当其执行时，它会独占整个线程，这样导致其他运行在该线程中的模块就没有机会执行。因为浏览器中所有的页面都运行在该线程中，所有这些页面都没有机会去执行任务，这样就会导致整个浏览器失去响应，变得卡顿。<br>除了脚本或插件会让单进程浏览器变卡顿外，<code>页面的内存泄露</code> 也是单进程变慢的一个重要原因，通常浏览器的内核都是非常复杂的，运行一个复杂点的页面再关闭页面，会存在内存不能完全回收的情况，这样导致的问题是使用时间越长，内存占用越高，浏览器会变得越慢。</p>
+<h2 id="3、不安全"><a href="#3、不安全" class="headerlink" title="3、不安全"></a>3、不安全</h2><p>这个依然可以从插件和页面脚本两个方面来看<br>插件可以使用c++等代码编写，通过插件可以获取到操作系统的任意资源，当你在页面运行一个插件时也就意味着这个插件能完成操作你的电脑，如果是个恶意插件，那么它就可以释放病毒，窃取你的账号密码，引发安全性的问题。<br>页面脚本，它可以通过浏览器的漏洞来获取系统权限，这些脚本获取系统权限之后也可以对你的电脑做一些事情，同样也会引发安全问题。</p>
+<h1 id="多进程浏览时代"><a href="#多进程浏览时代" class="headerlink" title="多进程浏览时代"></a>多进程浏览时代</h1><p>现代浏览器的出现就是为了解决此类问题，那么是如何解决的呢？</p>
+<h2 id="早期多进程架构"><a href="#早期多进程架构" class="headerlink" title="早期多进程架构"></a>早期多进程架构</h2><p>如图，2008年chrome发布时的进程架构<br><img src= "/img/bgTop.jpg" data-lazy-src="https://z3.ax1x.com/2021/05/25/gzdQln.png" alt="gzdQln.png"><br>从中可以看出，Chrome的页面是在单独的渲染进程中的，同时页面里的插件也是运行在单独的插件进程之中，而进程之间是通过IPC机制进行通信</p>
+<p>那么如何解决<code>不稳定</code>的问题。由于进程是相互隔离的，所有当一个页面或插件奔溃时，影响到的仅仅时当前的页面进程或者插件进程，并不会影响到浏览器和其他页面，这就完美地解决了页面或者插件的奔溃会导致整个浏览器奔溃，也就是不稳定的问题</p>
+<p>在看看如何解决<code>不流畅</code>的问题。同样，JavaScript也是运行在渲染进程中的，所以即使JavaScript阻塞了渲染进程，影响到的也只是当前的渲染页面，而并不会影响浏览器和其他页面，因为其他页面的脚本时运行在它们自己的渲染进程中的。所以当我们再在chrome中运行上面那个死循环的脚本时，没有响应的仅仅是当前的页面。<br>对于<code>内存泄漏</code>的解决方面就更简单了，因为当关闭一个页面时，整个渲染进程也会被关闭，之后改进程所占用的内存都会被系统回收，这样就轻松解决了浏览器页面的内存泄露问题。</p>
+<p>最后看看如何解决<code>安全问题</code>，采用多进程架构的额外好处是可以使用<code>安全沙箱</code>，你可以把沙箱看成是操作系统给进程上了一把锁，沙箱里面的程序可以运行，但是不能在你的硬盘上写入任何数据，也不能在敏感位置读取任何数据，例如你的文档和桌面。Chrome把插件进程和渲染进程锁在沙箱里面，这样即使在渲染进程或者插件进程里面执行了恶意程序，恶意程序也无法突破沙箱去获取系统权限。</p>
+<h1 id="目前多进程架构"><a href="#目前多进程架构" class="headerlink" title="目前多进程架构"></a>目前多进程架构</h1><p>不过 Chrome 的发展是滚滚向前的，相较之前，目前的架构又有了很多新的变化。<br><img src= "/img/bgTop.jpg" data-lazy-src="https://z3.ax1x.com/2021/05/25/gz6OOJ.png" alt="gz6OOJ.png"><br>从图中可以看出，最新的Chrome浏览器包括：1个浏览器（Browser）主进程、1个GPU进程、1个网络（NetWork）进程、多个渲染进程和多个插件进程。<br>这几个进程的功能</p>
+<ul>
+<li><code>浏览器进程</code>。主要负责界面显示、用户交互、子进程管理，同时提供存储等功能。</li>
+<li><code>渲染进程</code>。核心任务是将HTML、CSS和JavaScript转换为用户可以与之交互的网页，排版引擎Blink和JavaScript引擎V8都是运行在该进程中，默认情况下，chrome会为每个Tab标签创建一个渲染进程。处于安全考虑，渲染进程都是运行在沙箱模式下。</li>
+<li><code>GPU进程</code>。其实，在Chrome刚开始发布的时候是没有GPU进程的。而GPU的使用初衷是为了实现3D CSS的效果，只是随后网页、Chrome的UI界面都选择了采用GPU来绘制，这使得GPU成为浏览器普遍的需求。最后chrome在其多进程架构上也引入了GPU进程。</li>
+<li><code>网络进程</code>。主要复杂页面的网络资源加载，之前是作为一个模块运行在浏览器进程里面的，直至最近才独立出来，成为一个单独的进程。</li>
+<li><code>插件进程</code>。主要是负责插件的运行，因插件易奔溃，所以需要通过插件进程来隔离，以保证插件进程奔溃不会对浏览器和页面造成影响。</li>
+</ul>
+<p>那么，现在就可以解释：仅仅打开了1个页面，为什么会有4个进程？因为打开1个页面至少需要1个网络进程、1个浏览器进程、1个GPU进程以及1个渲染进程，共4个，如果页面还有插件运行的话，还需要加上1个插件进程。</p>
+<p><strong>虽然多进程模型提升了浏览器的稳定性、流程性、安全性，但同样不可避免地带来了一些问题</strong></p>
+<ul>
+<li><code>更高的资源占用</code>。因为每个进程都会包含公共基础结构的副本（如JavaScript运行环境），这就意味着浏览器会消耗更多的内存资源。</li>
+<li><code>更复杂的体系架构</code>。浏览器各模块之间耦合性高、扩展性差等问题，会导致现在的架构已经很难适应新的需求了。</li>
+</ul>
+<h1 id="未来面向服务的架构"><a href="#未来面向服务的架构" class="headerlink" title="未来面向服务的架构"></a>未来面向服务的架构</h1><p>为了解决这些我问题，在201年，chrome官方团队使用<code>面向服务的架构</code>（Services Oriented Architecture,简称<code>SOA</code>)的思想设计了新的Chrome架构，也就是说chrome整体架构会朝向现代操作系统所采用的”面向服务的架构”方向发展，原来的各种模块会被重构成独立的服务，每个服务都可以在独立的进程中运行，访问服务必须使用定义号的接口，通过IPC来通信，从而<code>构建一个更内聚、松耦合、易于维护和扩展的系统</code>，更好实现chrome简单、稳定、高速、安全的目的。</p>
+<p><strong>总体来说，Chrome是以一个非常快递的速度在进化，越来越多的业务和应用都逐渐转至浏览器来开发</strong></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Isabella</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://guestljz.com/2021/03/29/HTM-HTTP-WEB/%E4%BB%85%E4%BB%85%E6%89%93%E5%BC%80%E4%BA%861%E4%B8%AA%E9%A1%B5%E9%9D%A2%EF%BC%8C%E4%B8%BA%E4%BB%80%E4%B9%88%E6%9C%894%E4%B8%AA%E8%BF%9B%E7%A8%8B%EF%BC%9F/">http://guestljz.com/2021/03/29/HTM-HTTP-WEB/仅仅打开了1个页面，为什么有4个进程？/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://GuestLjz.com" target="_blank">Isabella's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/HTTP/">HTTP</a></div><div class="post_share"><div class="social-share" data-image="https://z3.ax1x.com/2021/04/08/cJGuHx.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/04/05/vue3.0/"><img class="prev-cover" data-lazy-src="https://z3.ax1x.com/2021/04/08/cY4H7n.png" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">vue3.0 One Piece</div></div></a></div><div class="next-post pull-right"><a href="/2021/03/01/HTTP%E5%8D%8F%E8%AE%AE%E7%9A%84%E5%90%84%E4%B8%AA%E7%89%88%E6%9C%AC/"><img class="next-cover" data-lazy-src="https://s3.ax1x.com/2021/02/22/y728MV.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">HTTP协议的各个版本</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/01/14/HTM-HTTP-WEB/CSRF攻击/" title="CSRF攻击"><img class="cover" data-lazy-src="https://s3.ax1x.com/2021/01/18/s69UIK.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-01-14</div><div class="title">CSRF攻击</div></div></a></div><div><a href="/2020/12/30/HTM-HTTP-WEB/XSS攻击/" title="XSS攻击"><img class="cover" data-lazy-src="https://s3.ax1x.com/2021/01/18/syzdPg.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-12-30</div><div class="title">XSS攻击</div></div></a></div><div><a href="/2020/12/23/HTM-HTTP-WEB/从浏览器地址栏输入URL到显示页面的经历了什么/" title="从浏览器地址栏输入URL到显示页面的经历了什么??"><img class="cover" data-lazy-src="https://s3.ax1x.com/2021/01/18/s6SxtU.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-12-23</div><div class="title">从浏览器地址栏输入URL到显示页面的经历了什么??</div></div></a></div><div><a href="/2021/05/25/HTM-HTTP-WEB/HTML、CSS和JavaScript是如何变成页面的/" title="HTML、CSS和JavaScript是如何变成页面的"><img class="cover" data-lazy-src="https://z3.ax1x.com/2021/01/27/sz4lFO.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-05-25</div><div class="title">HTML、CSS和JavaScript是如何变成页面的</div></div></a></div><div><a href="/2021/01/05/HTM-HTTP-WEB/浏览器的缓存机制/" title="强缓存_协商缓存"><img class="cover" data-lazy-src="https://s3.ax1x.com/2021/01/18/s69wGD.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-01-05</div><div class="title">强缓存_协商缓存</div></div></a></div></div></div></div><div class="aside_content" id="aside_content"><div class="card-widget card-info"><div class="card-content"><div class="card-info-avatar is-center"><img class="avatar-img" data-lazy-src="https://s3.ax1x.com/2020/12/18/rtAFGd.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Isabella</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">29</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">22</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/guestljz"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/guestljz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:guestljz@163.com" target="_blank" title="Email"><i class="fa fa-envelope"></i></a><a class="social-icon" href="https://music.163.com/#/user/home?id=372901002" target="_blank" title="Music"><i class="fas fa-music"></i></a></div></div></div><div class="card-widget card-announcement"><div class="card-content"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="card-content"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B"><span class="toc-number">1.</span> <span class="toc-text">进程和线程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B9%B6%E8%A1%8C%E5%A4%84%E7%90%86"><span class="toc-number">1.1.</span> <span class="toc-text">并行处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B-VS-%E8%BF%9B%E7%A8%8B"><span class="toc-number">1.2.</span> <span class="toc-text">线程 VS 进程</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8D%95%E8%BF%9B%E7%A8%8B%E6%B5%8F%E8%A7%88%E5%99%A8%E6%97%B6%E4%BB%A3"><span class="toc-number">2.</span> <span class="toc-text">单进程浏览器时代</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1%E3%80%81%E4%B8%8D%E7%A8%B3%E5%AE%9A"><span class="toc-number">2.1.</span> <span class="toc-text">1、不稳定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2%E3%80%81%E4%B8%8D%E6%B5%81%E7%95%85"><span class="toc-number">2.2.</span> <span class="toc-text">2、不流畅</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3%E3%80%81%E4%B8%8D%E5%AE%89%E5%85%A8"><span class="toc-number">2.3.</span> <span class="toc-text">3、不安全</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A4%9A%E8%BF%9B%E7%A8%8B%E6%B5%8F%E8%A7%88%E6%97%B6%E4%BB%A3"><span class="toc-number">3.</span> <span class="toc-text">多进程浏览时代</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%A9%E6%9C%9F%E5%A4%9A%E8%BF%9B%E7%A8%8B%E6%9E%B6%E6%9E%84"><span class="toc-number">3.1.</span> <span class="toc-text">早期多进程架构</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%9B%AE%E5%89%8D%E5%A4%9A%E8%BF%9B%E7%A8%8B%E6%9E%B6%E6%9E%84"><span class="toc-number">4.</span> <span class="toc-text">目前多进程架构</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9C%AA%E6%9D%A5%E9%9D%A2%E5%90%91%E6%9C%8D%E5%8A%A1%E7%9A%84%E6%9E%B6%E6%9E%84"><span class="toc-number">5.</span> <span class="toc-text">未来面向服务的架构</span></a></li></ol></div></div></div><div class="card-widget card-recent-post"><div class="card-content"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/05/25/HTM-HTTP-WEB/HTML%E3%80%81CSS%E5%92%8CJavaScript%E6%98%AF%E5%A6%82%E4%BD%95%E5%8F%98%E6%88%90%E9%A1%B5%E9%9D%A2%E7%9A%84/" title="HTML、CSS和JavaScript是如何变成页面的"><img data-lazy-src="https://z3.ax1x.com/2021/01/27/sz4lFO.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="HTML、CSS和JavaScript是如何变成页面的"/></a><div class="content"><a class="title" href="/2021/05/25/HTM-HTTP-WEB/HTML%E3%80%81CSS%E5%92%8CJavaScript%E6%98%AF%E5%A6%82%E4%BD%95%E5%8F%98%E6%88%90%E9%A1%B5%E9%9D%A2%E7%9A%84/" title="HTML、CSS和JavaScript是如何变成页面的">HTML、CSS和JavaScript是如何变成页面的</a><time datetime="2021-05-25T08:15:18.000Z" title="发表于 2021-05-25 16:15:18">2021-05-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/04/29/%E7%A5%9E%E7%A7%98%E5%8F%88%E6%80%A7%E6%84%9F%E7%9A%84CSS/" title="神秘又性感的CSS"><img data-lazy-src="https://s3.ax1x.com/2021/01/27/sz4Zl9.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="神秘又性感的CSS"/></a><div class="content"><a class="title" href="/2021/04/29/%E7%A5%9E%E7%A7%98%E5%8F%88%E6%80%A7%E6%84%9F%E7%9A%84CSS/" title="神秘又性感的CSS">神秘又性感的CSS</a><time datetime="2021-04-29T03:09:11.000Z" title="发表于 2021-04-29 11:09:11">2021-04-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/04/05/vue3.0/" title="vue3.0 One Piece"><img data-lazy-src="https://z3.ax1x.com/2021/04/08/cY4H7n.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="vue3.0 One Piece"/></a><div class="content"><a class="title" href="/2021/04/05/vue3.0/" title="vue3.0 One Piece">vue3.0 One Piece</a><time datetime="2021-04-05T13:59:31.000Z" title="发表于 2021-04-05 21:59:31">2021-04-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/03/29/HTM-HTTP-WEB/%E4%BB%85%E4%BB%85%E6%89%93%E5%BC%80%E4%BA%861%E4%B8%AA%E9%A1%B5%E9%9D%A2%EF%BC%8C%E4%B8%BA%E4%BB%80%E4%B9%88%E6%9C%894%E4%B8%AA%E8%BF%9B%E7%A8%8B%EF%BC%9F/" title="仅仅打开了1个页面，为什么会有4个进程？"><img data-lazy-src="https://z3.ax1x.com/2021/04/08/cJGuHx.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="仅仅打开了1个页面，为什么会有4个进程？"/></a><div class="content"><a class="title" href="/2021/03/29/HTM-HTTP-WEB/%E4%BB%85%E4%BB%85%E6%89%93%E5%BC%80%E4%BA%861%E4%B8%AA%E9%A1%B5%E9%9D%A2%EF%BC%8C%E4%B8%BA%E4%BB%80%E4%B9%88%E6%9C%894%E4%B8%AA%E8%BF%9B%E7%A8%8B%EF%BC%9F/" title="仅仅打开了1个页面，为什么会有4个进程？">仅仅打开了1个页面，为什么会有4个进程？</a><time datetime="2021-03-29T03:09:11.000Z" title="发表于 2021-03-29 11:09:11">2021-03-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/03/01/HTTP%E5%8D%8F%E8%AE%AE%E7%9A%84%E5%90%84%E4%B8%AA%E7%89%88%E6%9C%AC/" title="HTTP协议的各个版本"><img data-lazy-src="https://s3.ax1x.com/2021/02/22/y728MV.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="HTTP协议的各个版本"/></a><div class="content"><a class="title" href="/2021/03/01/HTTP%E5%8D%8F%E8%AE%AE%E7%9A%84%E5%90%84%E4%B8%AA%E7%89%88%E6%9C%AC/" title="HTTP协议的各个版本">HTTP协议的各个版本</a><time datetime="2021-03-01T12:51:53.000Z" title="发表于 2021-03-01 20:51:53">2021-03-01</time></div></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Isabella</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hi, 欢迎来到 <a target="_blank" rel="noopener" href="https://guestljz.gitee.io/">大美妞的世界</a>!</div></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/HCLonely/images@master/others/heartbeat.min.css"></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><img id="go-up-bgc" src="https://cdn.jsdelivr.net/gh/fudalijunyi/picture-bed/img/20200629182853.gif"></button></div></div><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module" defer></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',()=> {preloader.endLoading()})</script><div class="js-pjax"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script><script src="/gitcalendar/js/gitcalendar.js"></script><script src="/js/clearbanner.js"></script><script src="/js/autobanner.js"></script><script async data-pjax src="/js/randombg.js"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-show-text.min.js" async="async" mobile="false"></script><script>(function(){
+  const bp = document.createElement('script');
+  const curProtocol = window.location.protocol.split(':')[0];
+  if (curProtocol === 'https'){
+  bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+  bp.dataset.pjax = ''
+  const s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(bp, s);
+})()</script></div></body></html>
