@@ -13,7 +13,7 @@ img {
 }
 /* 背景图片 */
 #web_bg {
-   background-image: url(https://s3.ax1x.com/2020/12/18/rtACIe.png);
+   background-image: url('../img/bg.png');
 }
 /* 版心透明 */
 .card-widget{
@@ -42,10 +42,10 @@ img {
 
 #web_bg {
   /* 图片可下载上传到自己的图床也可以删掉*/
-  background-image: url("https://s3.ax1x.com/2020/12/18/rtACIe.png"),
+  background-image: url("../img/bg.png"),
   linear-gradient(60deg, rgba(255, 165, 150, 0.7) 10%, 
   rgba(0, 228, 255, 0.5)),
-  url("https://s3.ax1x.com/2020/12/18/rtACIe.png");
+  url("../img/bg.png");
 }
 
 

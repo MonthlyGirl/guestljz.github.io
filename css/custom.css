@@ -3,21 +3,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Sigmar+One&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap');
 
-@font-face {
+/* @font-face {
   font-family: 'Candyhome';
-  /* 字体名自定义即可 */
-  src: url('./fonts/Candy.ttf');
-  /* 字体文件路径 */
+  src: url('../font/Candy.ttf');
   font-display: swap;
-}
+} */
 
-body{
+/* body{
   font-family:Candyhome;
-}
+} */
 
-h1,h2,h3,h4,h5,h6{
+/* h1,h2,h3,h4,h5,h6{
   font-family:Candyhome;
-}
+} */
 
 
 
